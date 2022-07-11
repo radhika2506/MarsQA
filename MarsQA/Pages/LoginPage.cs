@@ -34,6 +34,7 @@ namespace MarsQA.Pages
             catch (Exception ex)
             {
                 Assert.Fail("Mars Portal page did not launch.", ex.Message);
+                //test
             }
 
             
