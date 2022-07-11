@@ -14,7 +14,7 @@ namespace MarsQA.Utilities
         public static void WaitToBeClickable(IWebDriver driver, string locator, string locatorvalue, int seconds)
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, seconds));
-            //123
+
             if (locator == "XPath")
             {
                 wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath(locatorvalue)));
