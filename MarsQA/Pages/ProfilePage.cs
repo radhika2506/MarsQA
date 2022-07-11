@@ -31,6 +31,12 @@ namespace MarsQA.Pages
             IWebElement LanguageModule = driver.FindElement(By.XPath("/html/body/div[1]/div/section[2]/div/div/div/div[3]/form/div[1]/a[3]"));
             LanguageModule.Click();
         }
+        public void GoToCertificationModule(IWebDriver driver)
+        {
+            WaitHelpers.WaitToBeClickable(driver, "XPath", "//div/section[2]/div/div/div/div[3]/form/div[1]/a[4]", 10);
+            IWebElement CertificationModule = driver.FindElement(By.XPath("//div/section[2]/div/div/div/div[3]/form/div[1]/a[4]"));
+            CertificationModule.Click();
+        }
 
     }
 }

@@ -89,6 +89,59 @@ Scenario: D3 delete existing education record
 	When I navigate to education Module
 	And I delete existing education record
 	Then the education record should delete from the education module
+	
+@Certifications 
+Scenario Outline: E1 create certification record with details
+	Given I logged into Mars portal successfully 
+	When I navigate to certification Module
+	And I add new certification record with '<CertificationName>' and '<CertificatedFrom>'
+	Then the certification record should be added successfully with correct '<CertificationName>' and '<CertificatedFrom>'
+	Examples: 
+	| CertificationName | CertificatedFrom   |
+	| Best Programmer   | Industry Connect   |
+	| Best lecturers    | Lincoln University |
+@Certifications 
+Scenario Outline: E2 edit certification record with details
+	Given I logged into Mars portal successfully 
+	When I navigate to certification Module
+	And I update '<CertificationName>' and '<CertificatedFrom>' on existing certification record
+	Then the certification record should have updated '<CertificationName>' and '<CertificatedFrom>' 
+	Examples: 
+	| CertificationName | CertificatedFrom         |
+	| Best Tester       | MVP Studio               |
+	| Best Tutors       | University of Canterbury |
+@Certifications 
+Scenario: E3 delete existing certification record
+	Given I logged into Mars portal successfully 
+	When I navigate to certification Module
+	And I delete existing certification record
+	Then the certification record should disappear from the certification module
+@Skill
+Scenario Outline: F1 create skill record with details
+	Given I logged into Mars portal successfully 
+	When I navigate to skills Module
+	And I add new '<skill>' record in skill module
+	Then the '<skill>' record should be added successfully in skill module
+	Examples: 
+	| skill       |
+	| Programming |
+	| Writing     |
+@Skill 
+Scenario Outline: F2 edit skill record with details
+	Given I logged into Mars portal successfully 
+	When I navigate to skills Module
+	And I update '<skill>'on existing skill record
+	Then the skill record should have updated '<skill>'
+	Examples: 
+	| skill              |
+	| Automation Testing |
+	| Swimming           |
+@Skill 
+Scenario: F3 delete existing skill record
+	Given I logged into Mars portal successfully 
+	When I navigate to skills Module
+	And I delete existing skill record
+	Then the skill record should disappear from the skills module
 
 
 

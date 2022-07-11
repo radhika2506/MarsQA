@@ -18,7 +18,7 @@ namespace MarsQA.StepDefinions
         LoginPage loginPageObj = new LoginPage();
         LangauageModule LangauageModuleObj = new LangauageModule();
         EducationModule EducationModuleObj = new EducationModule();
-
+        CertificationModule CertificationModuleObj = new CertificationModule();
         [After]
         public void Dispose()
         {
@@ -104,6 +104,7 @@ namespace MarsQA.StepDefinions
             String NewLanguage = LangauageModuleObj.GetNewLanguage(driver);
             Assert.That(NewLanguage != "Hindi", "language should be deleted still existing");  
         }
+
         [When(@"I navigate to Education module")]
         public void WhenINavigateToEducationModule()
         {
@@ -170,6 +171,67 @@ namespace MarsQA.StepDefinions
             Assert.That(NewUniName != "The University of melbourne", "University name should be deleted still existing");
             Assert.That(NewDegree != "Master", "degree should be deleted still existing");
         }
+        [When(@"I navigate to certification Module")]
+        public void WhenINavigateToCertificationModule()
+        {
+            profilePageObj.GoToCertificationModule(driver);
+        }
+
+        [When(@"I add new certification record with '(.*)' and '(.*)'")]
+        public void WhenIAddNewCertificationRecordWithAnd(string p0, string p1)
+        {
+            CertificationModuleObj.AddNewCertificate(driver, p0, p1);
+        }
+
+        [Then(@"the certification record should be added successfully with correct '(.*)' and '(.*)'")]
+        public void ThenTheCertificationRecordShouldBeAddedSuccessfullyWithCorrectAnd(string p0, string p1)
+        {
+            //Check if the certification was created successful
+            string NewCertificateName = CertificationModuleObj.GetNewCertificateName(driver);
+            string NewCertifiedFrom = CertificationModuleObj.GetNewCertifiedFrom(driver);
+            string NewCertifiedYear = CertificationModuleObj.GetNewCertifiedYear(driver);
+
+            Assert.That(NewCertificateName == p0, "New Certificate Name do not match");
+            Assert.That(NewCertifiedFrom == p1, "New Certified from do not match");
+            Assert.That(NewCertifiedYear == "2020", "New Certified Year do not match");
+        }
+
+        [When(@"I update '(.*)' and '(.*)' on existing certification record")]
+        public void WhenIUpdateAndOnExistingCertificationRecord(string p0, string p1)
+        {
+            CertificationModuleObj.EditExistingCertificate(driver, p0, p1);
+        }
+
+        [Then(@"the certification record should have updated '(.*)' and '(.*)'")]
+        public void ThenTheCertificationRecordShouldHaveUpdatedAnd(string p0, string p1)
+        {
+            //Check if the certification was updated successful
+            string NewCertificateName = CertificationModuleObj.GetNewCertificateName(driver);
+            string NewCertifiedFrom = CertificationModuleObj.GetNewCertifiedFrom(driver);
+            string NewCertifiedYear = CertificationModuleObj.GetNewCertifiedYear(driver);
+
+            Assert.That(NewCertificateName == p0, "updated Certificate Name do not match");
+            Assert.That(NewCertifiedFrom == p1, "updated Certified from do not match");
+            Assert.That(NewCertifiedYear == "2020", "updated Certified Year do not match");
+        }
+
+        [When(@"I delete existing certification record")]
+        public void WhenIDeleteExistingCertificationRecord()
+        {
+            CertificationModuleObj.DeleteExistingCertificate(driver);
+        }
+
+        [Then(@"the certification record should disappear from the certification module")]
+        public void ThenTheCertificationRecordShouldDisappearFromTheCertificationModule()
+        {
+            //check if the certification record deleted successful
+            string NewCertificateName = CertificationModuleObj.GetNewCertificateName(driver);
+            string NewCertifiedFrom = CertificationModuleObj.GetNewCertifiedFrom(driver);
+
+            Assert.That(NewCertificateName != "Best Tutors", "Certificate Name should be deleted still existing");
+            Assert.That(NewCertifiedFrom != "University of Canterbury", "Certified From should be deleted still existing");
+        }
+
 
 
     }
