@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace MarsQA.Utilities
 {
-    class CommonDriver
+    public class CommonDriver
     {
         public IWebDriver driver;
-        //hello
+
     }
 }
