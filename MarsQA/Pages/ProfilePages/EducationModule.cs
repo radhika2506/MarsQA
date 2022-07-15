@@ -8,16 +8,24 @@ using System.Threading.Tasks;
 
 namespace MarsQA.Pages
 {
-    class EducationModule : CommonDriver
+    class EducationModule
     {
-        public string GetNewUniversityName(IWebDriver driver)
+        private IWebDriver driver;
+
+        public EducationModule(IWebDriver driver)
+        {
+            this.driver = driver;
+        }
+
+
+        public string GetNewUniversityName()
         {
             try
             {
                 //refresh the page
                 driver.Navigate().Refresh();
-                ProfilePage profilePageObj = new ProfilePage();
-                profilePageObj.GoToEducationModule(driver);
+                ProfilePage profilePageObj = new ProfilePage(driver);
+                profilePageObj.GoToEducationModule();
 
                 //Get New University Name
                 WaitHelpers.WaitToBeVisible(driver, "XPath", "//div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/table/tbody[last()]/tr/td[2]", 10);
@@ -29,7 +37,7 @@ namespace MarsQA.Pages
                 return "No record existing";
             }
         }
-        public string GetNewCountryName(IWebDriver driver)
+        public string GetNewCountryName()
         {
             try
             {
@@ -42,7 +50,7 @@ namespace MarsQA.Pages
                 return "No record existing";
             }
         }
-                public string GetNewTitle(IWebDriver driver)
+                public string GetNewTitle()
                 {
                     try
                     {
@@ -54,7 +62,7 @@ namespace MarsQA.Pages
                         return "No record existing";
                     }
                 }
-                public string GetNewDegree(IWebDriver driver)
+                public string GetNewDegree()
                 {
                     try
                     {
@@ -66,7 +74,7 @@ namespace MarsQA.Pages
                         return "No record existing";
                     }
                 }
-                public string GetNewGraduationYear(IWebDriver driver)
+                public string GetNewGraduationYear()
                 {
                     try
                     {
@@ -78,7 +86,7 @@ namespace MarsQA.Pages
                         return "No record existing";
                     }
                 }
-        public void AddNewEducation(IWebDriver driver, string UniversityName, string Degree)
+        public void AddNewEducation(string UniversityName, string Degree)
         {
             //click on add button
             WaitHelpers.WaitToBeClickable(driver, "XPath", "//div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/table/thead/tr/th[6]/div", 10);
@@ -120,7 +128,7 @@ namespace MarsQA.Pages
             IWebElement AddButton = driver.FindElement(By.XPath("//div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/div/div[3]/div/input[1]"));
             AddButton.Click();
         }
-        public void EditExistingEducation(IWebDriver driver, string UniName, string Degree)
+        public void EditExistingEducation(string UniName, string Degree)
         {
             //click on edit button
             WaitHelpers.WaitToBeClickable(driver, "XPath", "//div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/table/tbody[last()]/tr/td[6]/span[1]/i", 10);
@@ -144,7 +152,7 @@ namespace MarsQA.Pages
 
         }
 
-        public void DeleteExistingEducation(IWebDriver driver)
+        public void DeleteExistingEducation()
         {
 
             WaitHelpers.WaitToBeClickable(driver, "XPath", "//div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/table/tbody[last()]/tr/td[6]/span[2]/i", 10);

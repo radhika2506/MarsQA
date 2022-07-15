@@ -10,49 +10,59 @@ namespace MarsQA.StepDefinitions
     [Binding]
     public class SellerAddEducationDetailsSteps:CommonDriver
     {
-        ProfilePage profilePageObj = new ProfilePage();
-        LoginPage loginPageObj = new LoginPage();
-        EducationModule EducationModuleObj = new EducationModule();
+        readonly ProfilePage profilePageObj ;
+        readonly LoginPage loginPageObj ;
+        readonly EducationModule educationModuleObj ;
+        public SellerAddEducationDetailsSteps()
+        {
+            //open chrom browser
+            driver = new FirefoxDriver();
+            profilePageObj = new ProfilePage(driver);
+            loginPageObj = new LoginPage(driver);
+            educationModuleObj = new EducationModule(driver);
+        }
         [After]
         public void Dispose()
         {
-            driver.Close();
+            if (driver != null)
+            {
+                driver.Close();
+            }    
         }
         [Given(@"I sign into Mars portal successfully")]
         public void GivenISignIntoMarsPortalSuccessfully()
         {
-            //open chrom browser
-            driver = new FirefoxDriver();
+          
             // log in steps    
             loginPageObj.LoginSteps(driver);
 
             //Check if the login was successful
-            string HiUser = profilePageObj.GetHiUser(driver);
+            string HiUser = profilePageObj.GetHiUser();
             Assert.That(HiUser == "Hi Radhika" | HiUser == "Hi", "Hi User not match");
         }
         
         [When(@"I navigate to Education Module")]
         public void WhenINavigateToEducationModule()
         {
-            profilePageObj.GoToEducationModule(driver);
+            profilePageObj.GoToEducationModule();
         }
         
         [When(@"I add new education record with '(.*)' and '(.*)'")]
         public void WhenIAddNewEducationRecordWithAnd(string p0, string p1)
         {
-            EducationModuleObj.AddNewEducation(driver, p0, p1);
+            educationModuleObj.AddNewEducation( p0, p1);
         }
         
         [When(@"I update '(.*)' and '(.*)' on existing education record")]
         public void WhenIUpdateAndOnExistingEducationRecord(string p0, string p1)
         {
-            EducationModuleObj.EditExistingEducation(driver, p0, p1);
+            educationModuleObj.EditExistingEducation( p0, p1);
         }
         
         [When(@"I delete existing education record")]
         public void WhenIDeleteExistingEducationRecord()
         {
-            EducationModuleObj.DeleteExistingEducation(driver);
+            educationModuleObj.DeleteExistingEducation();
         }
         
         [Then(@"the education record should be added successfully with correct '(.*)' and '(.*)'")]
@@ -60,11 +70,11 @@ namespace MarsQA.StepDefinitions
         {
 
             //Check if the education was created successful
-            string NewCountry = EducationModuleObj.GetNewCountryName(driver);
-            string NewUniName = EducationModuleObj.GetNewUniversityName(driver);
-            string NewTitle = EducationModuleObj.GetNewTitle(driver);
-            string NewDegree = EducationModuleObj.GetNewDegree(driver);
-            string NewGraduationYear = EducationModuleObj.GetNewGraduationYear(driver);
+            string NewCountry = educationModuleObj.GetNewCountryName();
+            string NewUniName = educationModuleObj.GetNewUniversityName();
+            string NewTitle = educationModuleObj.GetNewTitle();
+            string NewDegree = educationModuleObj.GetNewDegree();
+            string NewGraduationYear = educationModuleObj.GetNewGraduationYear();
 
             Assert.That(NewCountry == "India", "Actual Country do not match");
             Assert.That(NewUniName == p0, "Actual University name do not match");
@@ -77,11 +87,11 @@ namespace MarsQA.StepDefinitions
         public void ThenTheEducationRecordShouldHaveUpdatedAnd(string p0, string p1)
         {
             // Check if the education was updated successful
-            string NewUniName = EducationModuleObj.GetNewUniversityName(driver);
-            string NewCountry = EducationModuleObj.GetNewCountryName(driver);
-            string NewTitle = EducationModuleObj.GetNewTitle(driver);
-            string NewDegree = EducationModuleObj.GetNewDegree(driver);
-            string NewGraduationYear = EducationModuleObj.GetNewGraduationYear(driver);
+            string NewUniName = educationModuleObj.GetNewUniversityName();
+            string NewCountry = educationModuleObj.GetNewCountryName();
+            string NewTitle = educationModuleObj.GetNewTitle();
+            string NewDegree = educationModuleObj.GetNewDegree();
+            string NewGraduationYear = educationModuleObj.GetNewGraduationYear();
 
             Assert.That(NewUniName == p0, "updated name do not match");
             Assert.That(NewCountry == "India", "updated Country do not match");
@@ -94,8 +104,8 @@ namespace MarsQA.StepDefinitions
         public void ThenTheEducationRecordShouldDeleteFromTheEducationModule()
         {
             // Check if the education was deleted successful
-            string NewUniName = EducationModuleObj.GetNewUniversityName(driver);
-            string NewDegree = EducationModuleObj.GetNewDegree(driver);
+            string NewUniName = educationModuleObj.GetNewUniversityName();
+            string NewDegree = educationModuleObj.GetNewDegree();
 
             Assert.That(NewUniName != "The University of melbourne", "University name should be deleted still existing");
             Assert.That(NewDegree != "Master", "degree should be deleted still existing");

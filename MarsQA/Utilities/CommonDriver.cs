@@ -14,6 +14,16 @@ namespace MarsQA.Utilities
     public class CommonDriver
     {
         public IWebDriver driver;
+        
+        public void CloseTestRun()
+        {
+            driver?.Close();
+        }
+
 
     }
+
+
+
+
 }
